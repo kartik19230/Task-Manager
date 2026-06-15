@@ -13,16 +13,5 @@ import com.kk.dto.RegisterDTO;
 @RequestMapping("/auth")
 public class AuthController {
 
-	@GetMapping("/register")
-	public String registerPage(Model model) {
-		
-		model.addAttribute("register",new RegisterDTO());
-		
-		return "register";
-	}
 	
-	@PostMapping("/register")
-	public String registerUser(Model model,RegisterDTO registerDTO) {
-		return "login";
-	}
 }
