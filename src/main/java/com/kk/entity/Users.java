@@ -1,5 +1,6 @@
 package com.kk.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,16 +20,18 @@ public class Users {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	@NotBlank(message = "Name is required")
 	private String name;
 	
 	@Email(message = "Invalid Email format")
+	@NotBlank(message = "Email is required")
+	@Column(unique = true,nullable = false)
 	private String email;
 	
 	@NotBlank(message = "Password is required")
-	@Size(min = 8,max = 30,message = "Password must between 8 to 30 characters")
+	@Size(min = 8,message = "Password must greater than 8 characters")
 	private String password;
 
 }
