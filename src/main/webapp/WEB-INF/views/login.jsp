@@ -8,19 +8,18 @@
 <meta charset="UTF-8">
 <title>Login</title>
 
-<style >
-.error{
-	color : red;
+<style>
+.error {
+	color: red;
 	font-size: 14px;
 }
 </style>
 </head>
 <body>
 	<h1>Login Page</h1>
-	
-	<form:form action="login" method="POST"
-		modelAttribute="loginDTO">
-		<form:errors path="" cssClass="error"/>
+
+	<form:form action="login" method="POST" modelAttribute="loginDTO">
+		<form:errors path="" cssClass="error" />
 		<div>
 			<label for="email">Email:</label>
 			<form:input path="email" />

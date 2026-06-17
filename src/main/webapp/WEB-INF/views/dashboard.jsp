@@ -10,6 +10,10 @@
 	<h1>Welcome to your Dashboard!</h1>
 	<p>You have successfully logged in and redirected here.</p>
 	
+	<br>
+	<a href="/task/add">Add Task</a>
+	<br>
+	
 	<a href="/auth/logout">Logout</a>
 	
 </body>

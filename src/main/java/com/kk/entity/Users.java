@@ -22,16 +22,11 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "Name is required")
 	private String name;
 	
-	@Email(message = "Invalid Email format")
-	@NotBlank(message = "Email is required")
 	@Column(unique = true,nullable = false)
 	private String email;
 	
-	@NotBlank(message = "Password is required")
-	@Size(min = 8,message = "Password must greater than 8 characters")
 	private String password;
 
 }

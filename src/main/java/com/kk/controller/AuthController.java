@@ -39,7 +39,7 @@ public class AuthController {
 		if (result.hasErrors()) {
 			return "register";
 		}
-		RegisterResponseDTO responseDTO = service.register(dto);
+		RegisterResponseDTO responseDTO = service.register(dto);	
 
 		return "login";
 	}
@@ -63,9 +63,6 @@ public class AuthController {
 		if (user == null) {
 
 		    result.reject("login.failed", "Invalid Email or Password");
-
-		    System.out.println("Has Errors : " + result.hasErrors());
-		    System.out.println("All Errors : " + result.getAllErrors());
 
 		    return "login";
 		}
