@@ -3,6 +3,10 @@ package com.kk.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kk.dto.TaskRequestDTO;
@@ -105,5 +109,13 @@ public class TaskService {
 		task.setDescription(dto.getDescription());
 		
 		repo.save(task);
+	}
+	
+	public Page<Task> getTasks(Users user,int page){
+		
+		Pageable pageable = PageRequest.of(page,4,Sort.by("completed").ascending());
+		
+		return repo.findTaskByUser(user, pageable);
+		
 	}
 }

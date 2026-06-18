@@ -1,5 +1,6 @@
 package com.kk.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.kk.dto.TaskRequestDTO;
+import com.kk.entity.Task;
 import com.kk.entity.Users;
 import com.kk.service.TaskService;
 
@@ -47,7 +51,7 @@ public class TaskController {
 	}
 	
 	@GetMapping("/list")
-	public String getTasks(HttpSession session,Model model) {
+	public String getTasks(@RequestParam(defaultValue = "0") int page,HttpSession session,Model model) {
 		
 		Users user = (Users)session.getAttribute("user");
 		
@@ -56,7 +60,10 @@ public class TaskController {
 			return "redirect:/auth/loginIfRegister";
 		}
 		
-		model.addAttribute("tasks", service.getTasksByUser(user));
+		Page<Task> taskPage = service.getTasks(user, page);
+		
+//		model.addAttribute("tasks", service.getTasksByUser(user));
+		model.addAttribute("taskPage",taskPage);
 		
 		return "task-list";
 	}
