@@ -16,6 +16,10 @@
 		<span>Title : </span><span>${item.title}</span><br>
 		<span>Description : </span><span>${item.description}</span><br>
 		<span>Completed : </span><span>${item.completed}</span><br>
+		<a href = "/task/delete/${item.id}">Delete</a><br>
+		<a href = "/task/update/${item.id}">Update</a><br>
+		<a href = "/task/toggle/${item.id}">Toggle</a>
+		
 		<hr>
 	</c:forEach>
 

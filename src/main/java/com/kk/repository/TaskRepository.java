@@ -9,5 +9,5 @@ import com.kk.entity.Users;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-	public List<Task> findByUser(Users user);
+	public List<Task> findByUserOrderByIdAsc(Users user);
 }

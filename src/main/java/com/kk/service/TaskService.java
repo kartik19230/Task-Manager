@@ -33,6 +33,77 @@ public class TaskService {
 	
 	public List<Task> getTasksByUser(Users user) {
 		
-		return repo.findByUser(user);
+		return repo.findByUserOrderByIdAsc(user);
+	}
+	
+	public void deleteTask(Long id,Users user) {
+		
+		if (!repo.findById(id)
+				.orElseThrow()
+				.getUser()
+				.getId()
+				.equals(user.getId())) {
+			
+			throw new RuntimeException("unauthorized");
+		}
+		
+		repo.deleteById(id);
+	}
+	
+	public void toggleTask(Long id,Users user) {
+		
+		Task task = repo.findById(id)
+				.orElseThrow();
+		
+		if (!task.getUser()
+				.getId()
+				.equals(user.getId())) {
+			
+			throw new RuntimeException("unauthorized");
+		}
+		
+		//it will toggle the task state from complete to incomplete and incomplete to complete
+		task.setCompleted(!task.isCompleted());
+		
+		repo.save(task);
+		
+	}
+	
+	public TaskRequestDTO setTaskForUpdate(Long id,Users user) {
+		
+		Task task = repo.findById(id)
+				.orElseThrow();
+		
+		if (!task.getUser()
+				.getId()
+				.equals(user.getId())) {
+			
+			throw new RuntimeException("unauthorized");
+		}
+		
+		TaskRequestDTO dto = new TaskRequestDTO();
+		
+		dto.setId(task.getId());
+		dto.setTitle(task.getTitle());
+		dto.setDescription(task.getDescription());
+		
+		return dto;
+	}
+	
+	public void updateTask(TaskRequestDTO dto,Users user) {
+		
+		Task task = repo.findById(dto.getId()).orElseThrow();
+		
+		if (!task.getUser()
+				.getId()
+				.equals(user.getId())) {
+			
+			throw new RuntimeException("unauthorized");
+		}
+		
+		task.setTitle(dto.getTitle());
+		task.setDescription(dto.getDescription());
+		
+		repo.save(task);
 	}
 }

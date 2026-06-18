@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class TaskRequestDTO {
+	
+	private Long id;
 
 	@NotBlank(message ="Title is required")
 	@Size(max = 100,message = "Only 100 character allowed")

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +59,50 @@ public class TaskController {
 		model.addAttribute("tasks", service.getTasksByUser(user));
 		
 		return "task-list";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String deleteTask(@PathVariable Long id,HttpSession session) {
+		
+		service.deleteTask(id,(Users) session.getAttribute("user"));
+		
+		return "redirect:/task/list";
+	}
+	
+	@GetMapping("/toggle/{id}")
+	public String toggleTask(@PathVariable Long id,HttpSession session) {
+		
+		Users user = (Users) session.getAttribute("user");
+		
+		service.toggleTask(id, user);
+		
+		return "redirect:/task/list";
+	}
+	
+	@GetMapping("/update/{id}")
+	public String editTaskForm(@PathVariable Long id,HttpSession session,Model model) {
+		
+		Users user = (Users) session.getAttribute("user");
+		
+		TaskRequestDTO dto = service.setTaskForUpdate(id, user);
+		
+		model.addAttribute("taskRequestDTO", dto);
+		
+		return "task-form";
+	}
+	
+	@PostMapping("/update")
+	public String updateTask(@Valid @ModelAttribute TaskRequestDTO dto,BindingResult result,HttpSession session) {
+		
+		if (result.hasErrors()) {
+			return "redirect:/task/form";
+		}
+		
+		Users user = (Users) session.getAttribute("user");
+		
+		service.updateTask(dto, user);
+		
+		return "redirect:/task/list";
 	}
 	
 }
